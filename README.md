@@ -1,23 +1,61 @@
-# UK Carbon Intensity MCP
+---
+title: UK Carbon Intensity MCP Server
+emoji: ⚡
+colorFrom: green
+colorTo: blue
+sdk: docker
+pinned: false
+license: mit
+app_port: 7860
+---
 
-A naive, didactic, MCP (Model Context Protocol) wrapper implementation of the UK carbon intensity API.
+# UK Carbon Intensity MCP Server
 
-This project provides a simple MCP server that wraps the UK National Grid's Carbon Intensity API, allowing AI assistants and other MCP clients to access real-time and forecasted carbon intensity data for the UK electricity grid.
+A naive, didactic, Model Context Protocol (MCP) server that provides access to UK electricity grid carbon intensity data through the National Grid's Carbon Intensity API.
 
-## Credits
+## What is this?
 
-This implementation wraps the **UK Carbon Intensity API**, which is provided by **National Energy System Operator**. The original API provides real-time and forecasted carbon intensity data for Great Britain's electricity grid.
+This is an MCP (Model Context Protocol) server that wraps the UK Carbon Intensity API, allowing AI assistants and other MCP clients to access:
 
-- **Original API**: [UK Carbon Intensity API](https://carbonintensity.org.uk/)
-- **API Documentation**: https://carbon-intensity.github.io/api-definitions/
+- **Real-time carbon intensity data** for the UK electricity grid
+- **Regional carbon intensity data** by postcode
+- **Forecasted carbon intensity** for planning energy usage
+- **Generation mix data** showing renewable vs fossil fuel sources
+
+## How to use
+
+This MCP server runs using Server-Sent Events (SSE) transport and can be connected to by MCP clients. The server provides the following tools:
+
+### Available Tools
+
+1. **get_current_intensity()** - Get the current UK grid carbon intensity
+2. **get_carbon_intensity(from_datetime, to_datetime, postcode)** - Get historical/forecasted data for a specific region and time range
+
+### API Endpoints
+
+When running, the MCP server will be available at the base URL provided by Hugging Face Spaces, with MCP protocol endpoints for tool discovery and execution.
+
+## Data Source
+
+This implementation wraps the **UK Carbon Intensity API** provided by **National Energy System Operator (NESO)**:
+
+- **Original API**: [carbonintensity.org.uk](https://carbonintensity.org.uk/)
+- **API Documentation**: [carbon-intensity.github.io/api-definitions](https://carbon-intensity.github.io/api-definitions/)
 - **Data Source**: National Grid Electricity System Operator (NESO)
 
-The Carbon Intensity API is a free, publicly available service that helps track the environmental impact of electricity consumption in Great Britain. All credit for the underlying data and API design goes to the original developers at Nebo and National Grid ESO.
+## About Carbon Intensity
+
+Carbon intensity measures how much CO2 is emitted per unit of electricity consumed (gCO2eq/kWh). Lower values indicate cleaner electricity from renewable sources, while higher values indicate more fossil fuel generation.
 
 ## Disclaimer
 
-This project is an independent implementation and is not associated with, endorsed by, or affiliated with National Grid Electricity System Operator (NESO) or Nebo. It is a personal project that wraps their publicly available API.
+This project is an independent implementation and is not associated with, endorsed by, or affiliated with National Grid Electricity System Operator (NESO). It wraps their publicly available API for educational and development purposes.
 
-## More Details
+## Technical Details
 
-For more information about this implementation, see: https://cdi.nu/talks/2025-09-RSECon
+- **Framework**: FastMCP (Python MCP framework)
+- **Transport**: Server-Sent Events (SSE)
+- **Dependencies**: mcp[cli], requests, fastapi, uvicorn
+- **Python Version**: >=3.13
+
+For more information about this implementation, see: [cdi.nu/talks/2025-09-RSECon](https://cdi.nu/talks/2025-09-RSECon)
