@@ -1,5 +1,5 @@
 [project]
-name = "mcp-sample-python"
+name = "uk-carbon-intensity-mcp-py"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -7,4 +7,5 @@ requires-python = ">=3.13"
 dependencies = [
     "mcp[cli]>=1.13.1",
     "requests>=2.32.5",
+    "uvicorn>=0.35.0",
 ]
