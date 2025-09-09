@@ -1,14 +1,3 @@
----
-title: UK Carbon Intensity MCP Server
-emoji: ⚡
-colorFrom: green
-colorTo: blue
-sdk: docker
-pinned: false
-license: mit
-app_port: 7860
----
-
 # UK Carbon Intensity MCP Server
 
 A naive, didactic, Model Context Protocol (MCP) server that provides access to UK electricity grid carbon intensity data through the National Grid's Carbon Intensity API.
