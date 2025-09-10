@@ -38,10 +38,38 @@ def intensity_for_dates_and_postcode(
     try:
         response = requests.get(url)
         response.raise_for_status()
+        # Ideally we would do more processing here
+        # to summarize the data for the LLM,
+        # especially if the date range is large
         return response.json()["data"]
 
     except Exception as e:
         return f"Failed to retrieve carbon intensity data: {str(e)}"
+
+
+@mcp.tool(name="Get Current Fuel Mix")
+def generation_mix_current() -> dict[str, str]:
+    """Fetches the current electricity generation mix in the UK.
+    Returns a JSON with the current generation mix as percentages."""
+    url = "https://api.carbonintensity.org.uk/generation"
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        data = response.json()
+        generation_mix = data["data"]["generationmix"]
+
+        # Transform the response to a
+        # a more palatable format for the LLM
+        result: dict[str, str] = {}
+        for fuel_data in generation_mix:
+            fuel = fuel_data["fuel"]
+            percentage = fuel_data["perc"]
+            result[fuel] = f"{percentage}%"
+
+        return result
+
+    except Exception as e:
+        return f"Failed to retrieve current generation mix: {str(e)}"
 
 
 if __name__ == "__main__":
